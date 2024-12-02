@@ -102,7 +102,7 @@ def objective(trial):
 tic = time.time()
 study = optuna.create_study(direction="maximize", study_name="albert-phishing-detector", storage="sqlite:///albert-phishing-detector.db", load_if_exists=True)
 # run for maximum of 32 hours
-study.optimize(objective, n_trials=100, timeout=16*60*60)
+study.optimize(objective, n_trials=100, timeout=32*60*60)
 toc = time.time()
 
 print("Time taken:", toc - tic)
@@ -158,7 +158,7 @@ training_args = TrainingArguments(
     lr_scheduler_type="cosine_with_min_lr",
     lr_scheduler_kwargs={"min_lr": 1e-8},
     logging_dir="./logs",
-    logging_steps=int(total_train_batches / best_params['batch_size'] / 50),
+    logging_steps=500,
     eval_strategy="steps",
     save_strategy="steps",
     save_steps=500,
